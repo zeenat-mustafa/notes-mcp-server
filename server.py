@@ -97,5 +97,22 @@ def search_notes(query: str) -> str:
     lines = [f"#{note['id']}: {note['title']}" for note in matches]
     return "\n".join(lines)
 
+@mcp.tool()
+def delete_note(note_id: int) -> str:
+    """Delete a note by its id.
+
+    Args:
+        note_id: The id number of the note to delete.
+    """
+    notes = load_notes()
+
+    for note in notes:
+        if note["id"] == note_id:
+            notes.remove(note)
+            save_notes(notes)
+            return f"Deleted note #{note_id}: \"{note['title']}\""
+
+    return f"Error: no note found with id {note_id}."
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")

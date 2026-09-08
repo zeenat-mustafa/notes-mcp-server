@@ -1,7 +1,12 @@
 [
   {
-    "id": 1,
-    "title": "Grocery list",
-    "body": "Milk, eggs, bread"
+    "id": 2,
+    "title": "Bootcamp",
+    "body": "Labtop, Notebook"
+  },
+  {
+    "id": 3,
+    "title": "Travel",
+    "body": "Bag, Food, Cloths"
   }
 ]
