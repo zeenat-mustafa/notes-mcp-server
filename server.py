@@ -73,5 +73,29 @@ def get_note(note_id: int) -> str:
 
     return f"Error: no note found with id {note_id}."
 
+@mcp.tool()
+def search_notes(query: str) -> str:
+    """Search notes by keyword, matching against title or body.
+
+    Args:
+        query: The word or phrase to search for.
+    """
+    if not query.strip():
+        return "Error: search query cannot be empty."
+
+    notes = load_notes()
+    query_lower = query.strip().lower()
+
+    matches = [
+        note for note in notes
+        if query_lower in note["title"].lower() or query_lower in note["body"].lower()
+    ]
+
+    if not matches:
+        return f"No notes found matching '{query}'."
+
+    lines = [f"#{note['id']}: {note['title']}" for note in matches]
+    return "\n".join(lines)
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
