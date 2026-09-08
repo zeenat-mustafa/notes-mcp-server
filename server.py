@@ -114,5 +114,16 @@ def delete_note(note_id: int) -> str:
 
     return f"Error: no note found with id {note_id}."
 
+@mcp.resource("notes://all")
+def all_notes() -> str:
+    """A read-only view of every note currently stored."""
+    notes = load_notes()
+
+    if not notes:
+        return "No notes yet."
+
+    lines = [f"#{note['id']}: {note['title']}\n{note['body']}" for note in notes]
+    return "\n\n".join(lines)
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
