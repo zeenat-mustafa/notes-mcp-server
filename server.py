@@ -47,6 +47,16 @@ def create_note(title: str, body: str) -> str:
 
     return f"Created note #{note['id']}: \"{note['title']}\""
 
+@mcp.tool()
+def list_notes() -> str:
+    """List all notes, showing their id and title."""
+    notes = load_notes()
+
+    if not notes:
+        return "No notes yet."
+
+    lines = [f"#{note['id']}: {note['title']}" for note in notes]
+    return "\n".join(lines)
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
