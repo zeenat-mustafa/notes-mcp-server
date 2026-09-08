@@ -58,5 +58,20 @@ def list_notes() -> str:
     lines = [f"#{note['id']}: {note['title']}" for note in notes]
     return "\n".join(lines)
 
+@mcp.tool()
+def get_note(note_id: int) -> str:
+    """Get the full title and body of a single note by its id.
+
+    Args:
+        note_id: The id number of the note to retrieve.
+    """
+    notes = load_notes()
+
+    for note in notes:
+        if note["id"] == note_id:
+            return f"#{note['id']}: {note['title']}\n\n{note['body']}"
+
+    return f"Error: no note found with id {note_id}."
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
